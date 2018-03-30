@@ -1,0 +1,172 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: ROBLOX Lua App
+file_extensions:
+  - rbxs
+  - lua
+scope: source.rbxlua
+
+variables:
+  string_escape_characters: '%(a|A|c|C|d|D|l|L|p|P|s|S|u|U|w|W|x|X|z|Z|g|G|o|e|E|f|d|i|c|%|q)'
+  identifier: '[A-Za-z_]\w*'
+  number: '(-)?\d*\.?\d+'
+
+contexts:
+  main:
+    # Strings
+    - match: '"'
+      scope: punctuation.definition.string.begin.rbxlua
+      push: double_quoted_string
+
+    - match: "'"
+      scope: punctuation.definition.string.begin.rbxlua
+      push: single_quoted_string
+
+    - match: '\[\['
+      scope: punctuation.definition.string.begin.multiline.rbxlua
+      push: multiline_string
+
+    # Comments
+    - match: '--\[\['
+      scope: punctuation.definition.comment.rbxlua
+      push: block_comment
+
+    - match: '--'
+      scope: punctuation.definition.comment.rbxlua
+      push: line_comment
+
+    # Numbers
+    - match: '\b{{number}}\b'
+      scope: constant.numeric.rbxlua
+
+    - match: '\b-?0x[\da-fA-F]+\b'
+      scope: constant.numeric.hex.rbxlua
+
+    - match: '\b{{number}}[eE]{{number}}\b'
+      scope: constant.numeric.scientific.rbxlua
+
+    # Language constants
+    - match: '\b(true|false|nil)\b'
+      scope: constant.language.rbxlua
+
+    # Control keywords
+    - match: '\b(break|do|end|for|in|repeat|return|while)\b'
+      scope: keyword.control.rbxlua
+
+    # Conditional keywords
+    - match: '\b(if|then|else|elseif|until)\b'
+      scope: keyword.control.conditional.rbxlua
+
+    # Builtins
+    - match: '\b(game|workspace|script|plugin|_VERSION|_G|math\.(huge|pi)|self)\b'
+      scope: variable.language.rbxlua
+
+    # Builtin functions
+    - match: '\b(print|warn|error|assert|collectgarbage|dofile|getfenv|getmetatable|ipairs|load|loadfile|spawn|loadstring|newproxy|next|pairs|[xy]?pcall|rawequal|rawget|rawset|select|setfenv|setmetatable|tonumber|type|unpack|delay|elapsedTime|LoadLibrary|require|spawn|tick|time|UserSettings|Version|wait|DebuggerManager|math\.(?:abs|acos|asin|atan2?|ceil|cos|cosh|deg|exp|floor|fmod|frexp|ldexp|log|log10|max|min|modf|noise|pow|rad|random|randomseed|sin|sinh|sqrt|tan|tanh)|coroutine\.(?:create|resume|running|status|wrap|yield)|string\.(?:byte|char|dump|find|format|len|lower|match|rep|reverse|sub|upper|gmatch|gsub)|table\.(?:concat|insert|remove|sort)|Vector3\.(?:new|FromAxis|FromNormalId)|CFrame\.(?:new|Angles|fromAxisAngle|fromEulerAnglesXYZ)|Axes\.new|BrickColor\.(?:new|palette|random|White|Gray|DarkGray|Black|Red|Yellow|Green|Blue)|Color3\.(?:new|fromRGB|fromHSV|toHSV)|ColorSequence\.new|ColorSequenceKeypoint\.new|Faces\.new|Instance\.new|NumberRange\.new|NumberSequence\.new|NumberSequenceKeypoint\.new|PhysicalProperties\.new|Ray\.new|Rect\.new|Region3\.new|Region3int16\.new|UDim\.new|UDim2\.new|Vector2\.new|Vector3int16\.new|debug\.traceback|os\.(?:time|difftime))\b'
+      scope: variable.function.builtin.rbxlua
+
+    # Deprecated table functions
+    - match: '\b(table\.(foreach|foreachi|getn|maxn|setn))\b'
+      scope: invalid.deprecated.rbxlua
+
+    # Function calls
+    - match: '\b({{identifier}})(?=\s*[\("''\{])\b'
+      scope: variable.function.rbxlua
+
+    # Logical word operators
+    - match: '\b(and|or|not)\b'
+      scope: keyword.operator.word.rbxlua
+
+    # Logical operators
+    - match: '\b((<|>)=?|~=|==)\b'
+      scope: keyword.operator.logical.rbxlua
+
+    # Arithmetic operators
+    - match: '\b(\+|-|\*|%|\^)\b'
+      scope: keyword.operator.arithmetic.rbxlua
+
+    # Assignment operator
+    - match: '\b=\b'
+      scope: keyword.operator.assignment.rbxlua
+
+    # Miscellaneous operators
+    - match: '\(|\)|\{|\}|\[|\]|;|:|,|\.{1,3}'
+      scope: keyword.operator.rbxlua
+
+    # Local storage modifier
+    - match: '\blocal\b'
+      scope: storage.modifier.rbxlua
+
+    # Function declarations
+    - match: '\bfunction\b'
+      scope: storage.type.function.rbxlua
+      push: function_declaration
+
+    # Deprecated members
+    - match: '\b(Warn|Workspace|Game|Spawn|Delay|ElapsedTime|Wait|stats|PluginManager|gcinfo)\b'
+      scope: invalid.deprecated.rbxlua
+
+    # Enums
+    - match: '\bEnum\.?({{identifier}})?\.?({{identifier}})?\b'
+      scope: constant.language.enum.rbxlua
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.rbxlua
+    - match: '\\.'
+      scope: constant.character.escape.rbxlua
+    - match: '"'
+      scope: punctuation.definition.string.end.rbxlua
+      pop: true
+    - match: '{{string_escape_characters}}'
+      scope: constant.character.escape.rbxlua
+
+  single_quoted_string:
+    - meta_scope: string.quoted.single.rbxlua
+    - match: '\\.'
+      scope: constant.character.escape.rbxlua
+    - match: "'"
+      scope: punctuation.definition.string.end.rbxlua
+      pop: true
+    - match: '{{string_escape_characters}}'
+      scope: constant.character.escape.rbxlua
+
+  multiline_string:
+    - meta_scope: string.quoted.other.rbxlua
+    - match: '\\.'
+      scope: constant.character.escape.rbxlua
+    - match: '\]\]'
+      scope: punctuation.definition.string.end.multiline.rbxlua
+      pop: true
+    - match: '{{string_escape_characters}}'
+      scope: constant.character.escape.rbxlua
+
+  line_comment:
+    - meta_scope: comment.line.rbxlua
+    - match: $
+      pop: true
+
+  block_comment:
+    - meta_scope: comment.block.rbxlua
+    - match: '\]\]'
+      pop: true
+
+  function_declaration:
+    - meta_scope: meta.function.rbxlua
+    - match: '((?:{{identifier}}([\.:]))?)({{identifier}})'
+      captures:
+        1: entity.name.namespace.rbxlua
+        2: keyword.operator.rbxlua
+        3: entity.name.function.rbxlua
+    - match: '\('
+      scope: keyword.operator.rbxlua
+      set:
+        - meta_scope: meta.function.parameters.rbxlua
+        - match: '{{identifier}}'
+          scope: variable.function.parameter.rbxlua
+        - match: ',\s*\)'
+          scope: invalid.illegal.rbxlua
+          pop: true
+        - match: '\)'
+          scope: keyword.operator.rbxlua
+          pop: true
