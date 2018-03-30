@@ -1,9 +1,7 @@
 # RbxLuaApp_Sublime_Autocomplete
 LuaApp AutoComplete plugin for Sublime
 
-### Lua built-in, Roblox API, Roact are fully supported
-
-
+Lua built-in, Roblox API, Roact are fully supported
 
 Installation:
 * Open Sublime Text 3.
