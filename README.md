@@ -14,6 +14,5 @@ Usage:
 * Use \<Option\> + \<ESC\> to list all possible auto-complete entries
 
 Demo:
-<video width="320" height="240" controls>
-  <source src="RbxLuaApp_sublime_demo.mov" type="video/mp4">
-</video>
+<p><img alt="Image" src="demo_0.gif" /></p>
+<p><img alt="Image" src="demo_1.gif" /></p>
