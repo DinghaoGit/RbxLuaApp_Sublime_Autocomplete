@@ -12,3 +12,8 @@ Installation:
 Usage:
 * Use \<Tab\> to skip to the next editable parameter in the generated template
 * Use \<Option\> + \<ESC\> to list all possible auto-complete entries
+
+Demo:
+<video width="320" height="240" controls>
+  <source src="RbxLuaApp_sublime_demo.mov" type="video/mp4">
+</video>
