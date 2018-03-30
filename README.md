@@ -6,7 +6,7 @@ Lua built-in, Roblox API, Roact are fully supported
 Installation:
 * Open Sublime Text 3.
 * Open packages folder using Preferences > Browse Packages in the menu.
-* Extract the RbxLuaApp into the directory. Please keep the folder name as "RbxLuaApp".
+* Copy the "RbxLuaApp" folder into the Packages directory. Please keep the folder name as "RbxLuaApp".
 * Restart Sublime Text 3.
 
 Usage:
